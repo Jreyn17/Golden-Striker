@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 6972996167443645379}
   - component: {fileID: -6188077499652121470}
   - component: {fileID: 1359841753131494640}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SoccerBall
-  m_TagString: Untagged
+  m_TagString: Ball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -167,3 +167,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 6972996167443645379}
   sr: {fileID: 1175397769905504766}
+  collider: {fileID: -6188077499652121470}
+  madeHeight: 0
