@@ -6,16 +6,17 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    private int startingLives = 3;
-
-    public static event Action OnGameStarted;
+    //Events
     public static event Action<int> OnLivesChanged;
     public static event Action<int> OnPointsChanged;
+    public static event Action OnGameStarted;
     public static event Action OnGameOver;
+
+    private int startingLives = 3;
 
     public int points { get; private set; }
     public int lives { get; private set; }
-    public bool IsRunning { get; private set; }
+    public bool IsRunning { get; private set; } //Is game running?
 
     private void Awake()
     {
@@ -59,18 +60,21 @@ public class GameManager : MonoBehaviour
         if (!IsRunning) return;
         if (lives <= 0) return;
 
-        points += amount;
-        OnPointsChanged?.Invoke(points);
+        points += amount; //Add points
+        OnPointsChanged?.Invoke(points); //Invoke subscribers (UIManager)
     }
 
+    //Might need to change to ChangeLife (if shop added)
     public void LoseLife(int amount)
     {
         if (!IsRunning) return;
         if (lives <= 0) return;
 
+        //Subtract lives
         lives = Mathf.Max(0, lives - amount);
         OnLivesChanged?.Invoke(lives);
 
+        //If no more lives, initiate GameOver sequence
         if (lives == 0)
         {
             IsRunning = false;

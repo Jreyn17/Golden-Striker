@@ -43,6 +43,7 @@ public class Kicker : MonoBehaviour
     private void FixedUpdate()
     {
         transform.position = targetPos;
+
     }
 
     private Vector2 GetMouseWorld()
@@ -57,10 +58,10 @@ public class Kicker : MonoBehaviour
         if (!other.CompareTag("Ball")) return;
         if (!other.TryGetComponent<Rigidbody2D>(out var rb)) return;
 
-        if (!other.TryGetComponent<KickCooldown>(out var cooldown))
-            cooldown = other.gameObject.AddComponent<KickCooldown>();
+        Ball ball = other.gameObject.GetComponent<Ball>();
+        if (ball == null) return;
 
-        if (Time.time < cooldown.nextKickTime) return;
+        if (Time.time < ball.nextKickTime) return;
 
         float speed = swipeVelocity.magnitude;
         if (speed < minSwipeSpeed) return;
@@ -90,11 +91,6 @@ public class Kicker : MonoBehaviour
         rb.AddTorque(Random.Range(-1f, 1f) * (impulse * 0.15f), ForceMode2D.Impulse);
 
         //Next kick time waits for after the kickCooldown
-        cooldown.nextKickTime = Time.time + kickCooldown;
-    }
-
-    private class KickCooldown : MonoBehaviour
-    {
-        public float nextKickTime;
+        ball.nextKickTime = Time.time + kickCooldown;
     }
 }

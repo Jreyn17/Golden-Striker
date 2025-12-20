@@ -8,6 +8,8 @@ public class Ball : MonoBehaviour
     [SerializeField] SpriteRenderer sr;
     [SerializeField] Collider2D collider;
 
+    public float nextKickTime;
+
     //Color dictionary for instantiating different balls
     private Dictionary<int, Color> ballColors = new Dictionary<int, Color>()
     {

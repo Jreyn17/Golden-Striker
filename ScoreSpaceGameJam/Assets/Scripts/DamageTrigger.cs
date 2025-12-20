@@ -9,9 +9,11 @@ public class DamageTrigger : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        //Grab ball component from ball
         Ball ball = other.GetComponent<Ball>();
         if (ball == null) return;
 
+        //Grab other rigidbody2D
         Rigidbody2D otherRb = other.GetComponent<Rigidbody2D>();
         if (otherRb == null) return;
 
