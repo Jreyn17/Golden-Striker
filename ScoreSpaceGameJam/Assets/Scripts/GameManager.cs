@@ -18,8 +18,10 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private ProfileManager profileManager;
 
+    //Panels
     [SerializeField] private GameObject leaderboardPanel;
     [SerializeField] private GameObject rulesPanel;
+    [SerializeField] private GameObject settingsPanel;
 
     private int startingLives = 3;
 
@@ -102,6 +104,14 @@ public class GameManager : MonoBehaviour
         {
             rulesPanel.SetActive(true);
         }
+
+        buttonSource.PlayOneShot(buttonClick);
+    }
+
+    public void OnSettingsClicked()
+    {
+        if (settingsPanel.activeSelf) settingsPanel.SetActive(false);
+        else settingsPanel.SetActive(true);
 
         buttonSource.PlayOneShot(buttonClick);
     }

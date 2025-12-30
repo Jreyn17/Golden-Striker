@@ -3,30 +3,51 @@ using System;
 
 public class DamageTrigger : MonoBehaviour
 {
+
+    public enum TriggerType { Top, Bottom };
+    public TriggerType currentTriggerType;
+
     [SerializeField] BoxCollider2D boxCollider;
 
     [SerializeField] AudioSource lifeSource;
     [SerializeField] AudioClip minusLife;
 
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerStay2D(Collider2D other)
     {
-        //Grab ball component from ball
-        Ball ball = other.GetComponent<Ball>();
-        if (ball == null) return;
+        Bounds net = boxCollider.bounds;
+        Bounds ball = other.bounds;
 
-        //Grab other rigidbody2D
-        Rigidbody2D otherRb = other.GetComponent<Rigidbody2D>();
-        if (otherRb == null) return;
+        Rigidbody2D ballRb = other.GetComponent<Rigidbody2D>();
+        if (ballRb == null) return;
 
-        //Checks if the y velocity is negative and if the ball made it to height
-        if (otherRb.linearVelocity.y < 0f)
+        bool fullyInside =
+            ball.min.x >= net.min.x && ball.max.x <= net.max.x &&
+            ball.min.y >= net.min.y && ball.max.y <= net.max.y;
+
+        if (!fullyInside) return;
+        if (currentTriggerType == TriggerType.Top)
         {
-            Debug.Log("You lost a life");
+            if (ballRb.linearVelocity.y > 0f)
+            {
+                Debug.Log("You lost a life");
 
-            lifeSource.PlayOneShot(minusLife);
-            GameManager.Instance?.LoseLife(1);
+                lifeSource.PlayOneShot(minusLife);
+                GameManager.Instance?.LoseLife(1);
 
-            Destroy(other.gameObject);
+                Destroy(other.gameObject);
+            }
+        }
+        else if (currentTriggerType == TriggerType.Bottom)
+        {
+            if (ballRb.linearVelocity.y < 0f)
+            {
+                Debug.Log("You lost a life");
+
+                lifeSource.PlayOneShot(minusLife);
+                GameManager.Instance?.LoseLife(1);
+
+                Destroy(other.gameObject);
+            }
         }
     }
 }
