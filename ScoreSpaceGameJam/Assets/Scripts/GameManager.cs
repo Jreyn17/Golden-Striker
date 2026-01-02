@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
     private void ResetGameState()
     {
         points = 0;
-        highScore = PlayerPrefs.GetInt("hs3", 0);
+        highScore = PlayerPrefs.GetInt("hs101", 0);
         startingHighScore = highScore;
         lives = Mathf.Max(0, startingLives);
         IsRunning = false;
@@ -129,7 +129,7 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log(points);
             highScore = points;
-            PlayerPrefs.SetInt("hs3", highScore);
+            PlayerPrefs.SetInt("hs101", highScore);
             PlayerPrefs.Save();
             OnHighScore?.Invoke(highScore);
         }
