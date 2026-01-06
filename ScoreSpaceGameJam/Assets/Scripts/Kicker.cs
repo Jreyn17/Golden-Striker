@@ -63,6 +63,7 @@ public class Kicker : MonoBehaviour
         if (!other.TryGetComponent<Rigidbody2D>(out var rb)) return;
         if (!other.TryGetComponent<Ball>(out var ball)) return;
 
+        impactSource.pitch = Random.Range(0.6f, 1.4f);
         impactSource.PlayOneShot(impact);
 
         if (Time.time < ball.nextKickTime) return;

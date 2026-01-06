@@ -5,6 +5,7 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] private TMP_Text livesText;
     [SerializeField] private TMP_Text pointsText;
+    [SerializeField] private TMP_Text streakText;
     [SerializeField] private TMP_Text highScoreText;
 
     [SerializeField] private GameObject startPanel;
@@ -20,6 +21,7 @@ public class UIManager : MonoBehaviour
     {
         GameManager.OnLivesChanged += HandleLivesChanged;
         GameManager.OnPointsChanged += HandlePointsChanged;
+        GameManager.OnStreakChanged += HandleStreakChanged;
         GameManager.OnHighScore += HandleHighScore;
         GameManager.OnGameStarted += HandleGameStarted;
         GameManager.OnGameOver += HandleGameOver;
@@ -30,6 +32,7 @@ public class UIManager : MonoBehaviour
     {
         GameManager.OnLivesChanged -= HandleLivesChanged;
         GameManager.OnPointsChanged -= HandlePointsChanged;
+        GameManager.OnStreakChanged -= HandleStreakChanged;
         GameManager.OnHighScore -= HandleHighScore;
         GameManager.OnGameStarted -= HandleGameStarted;
         GameManager.OnGameOver -= HandleGameOver;
@@ -38,19 +41,25 @@ public class UIManager : MonoBehaviour
     //When lives increase or decrease
     private void HandleLivesChanged(int lives)
     {
-        if (livesText != null) livesText.text = $"Lives: {lives}";
+        if (livesText != null) livesText.text = $"{lives}";
     }
 
     //When points increase
     private void HandlePointsChanged(int points)
     {
-        if (pointsText != null) pointsText.text = $"Points: {points}";
+        if (pointsText != null) pointsText.text = $"{points}";
         
+    }
+
+    //When streak changes
+    private void HandleStreakChanged(int streak, int nextStreakUp)
+    {
+        if (streakText != null) streakText.text = $"{streak}/{nextStreakUp}";
     }
 
     private void HandleHighScore(int highScore)
     {
-        if (highScoreText != null) highScoreText.text = $"Highscore: {highScore}";
+        if (highScoreText != null) highScoreText.text = $"{highScore}";
     }
 
     //When game starts

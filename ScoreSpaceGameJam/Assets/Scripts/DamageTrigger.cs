@@ -12,6 +12,8 @@ public class DamageTrigger : MonoBehaviour
     [SerializeField] AudioSource lifeSource;
     [SerializeField] AudioClip minusLife;
 
+    public static event Action<int> OnLoseLife;
+
     void OnTriggerStay2D(Collider2D other)
     {
         Bounds net = boxCollider.bounds;
@@ -31,8 +33,11 @@ public class DamageTrigger : MonoBehaviour
             {
                 Debug.Log("You lost a life");
 
+
                 lifeSource.PlayOneShot(minusLife);
-                GameManager.Instance?.LoseLife(1);
+                OnLoseLife?.Invoke(1); //Event goes to GameManager & StreakManager
+
+                /*GameManager.Instance?.LoseLife(1);*/
 
                 Destroy(other.gameObject);
             }
@@ -44,7 +49,9 @@ public class DamageTrigger : MonoBehaviour
                 Debug.Log("You lost a life");
 
                 lifeSource.PlayOneShot(minusLife);
-                GameManager.Instance?.LoseLife(1);
+                OnLoseLife?.Invoke(1); //Event goes to GameManager & StreakManager
+
+                /*GameManager.Instance?.LoseLife(1);*/
 
                 Destroy(other.gameObject);
             }

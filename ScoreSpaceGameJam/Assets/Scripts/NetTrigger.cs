@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class NetTrigger : MonoBehaviour
 {
@@ -8,6 +9,9 @@ public class NetTrigger : MonoBehaviour
     [SerializeField] AudioSource scoringDingsSource;
     [SerializeField] AudioClip positiveDing;
     [SerializeField] AudioClip negativeDing;
+
+    public static event Action<int> OnPointScored;
+    public static event Action<int> OnWrongGoal;
 
     void OnTriggerStay2D(Collider2D other)
     {
@@ -29,7 +33,9 @@ public class NetTrigger : MonoBehaviour
             Debug.Log("You scored a point!");
 
             scoringDingsSource.PlayOneShot(positiveDing);
-            GameManager.Instance?.UpdatePoints(1);
+            OnPointScored?.Invoke(1); //Event goes to GameManager & StreakManager
+
+            /*GameManager.Instance?.UpdatePoints(1);*/
 
             Destroy(other.gameObject);
         }
@@ -38,7 +44,9 @@ public class NetTrigger : MonoBehaviour
             Debug.Log("You scored for the wrong team!");
 
             scoringDingsSource.PlayOneShot(negativeDing);
-            GameManager.Instance?.UpdatePoints(-2);
+            OnWrongGoal?.Invoke(-2); //Event goes to GameManager & StreakManager
+
+            /*GameManager.Instance?.UpdatePoints(-2);*/
 
             Destroy(other.gameObject);
         }

@@ -12,6 +12,9 @@ public class Ball : MonoBehaviour
 
     public float nextKickTime;
 
+    [SerializeField] AudioSource launchSource;
+    [SerializeField] AudioClip launch;
+
     //Color dictionary for instantiating different balls
     private Dictionary<int, Color> ballColors = new Dictionary<int, Color>()
     {
@@ -42,6 +45,9 @@ public class Ball : MonoBehaviour
     IEnumerator WaitToLaunch()
     {
         yield return new WaitForSeconds(3f);
+
+        launchSource.pitch = Random.Range(0.8f, 1.2f);
+        launchSource.PlayOneShot(launch);
 
         //Enable gravity 
         rb.gravityScale = 0.85f;

@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,13 +10,13 @@ public class Leaderboard : MonoBehaviour
 {
     [SerializeField] private List<TextMeshProUGUI> names;
     [SerializeField] private List<TextMeshProUGUI> scores;
+    [SerializeField] private Button currentVersionButton;
 
     private string publicLeaderboardKey = "e552eb83d9a62c7d762c7851083cf79e19cd0efa9788934441845e075e6ea21d"; //Version 1.0.0
     private string publicLeaderboardKey2 = "a801d46e6de97ee0162b123c8c662589060fbdcd65a6d2bc0e2dc0bab4659e9e"; //Version 1.0.1
 
     void Start()
     {
-        GetLeaderboard(publicLeaderboardKey);
     }
 
     void OnEnable()
